@@ -1,27 +1,68 @@
 <script lang="ts" setup>
 import {reactive} from 'vue'
 import {Greet} from '../../wailsjs/go/main/App'
+import {BTabItem, BTabs} from "buefy";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
+type TabHeader = {
+  title: string
+  icon: string
+}
+
+const TAB_HEADERS: TabHeader[] = [
+  {title: "Home", icon: "fa-solid fa-house"},
+  {title: "Settings", icon: "fa-solid fa-gear"},
+  {title: "About", icon: "fa-solid fa-circle-info"},
+]
 
 const data = reactive({
-  name: "",
-  resultText: "Please enter your name below 👇",
+  tabIndex: 1,
 })
 
+const onTabChange = (newIndex: number) => {
+  console.log("Tab changed to index:", newIndex)
+  data.tabIndex = newIndex
+}
+
+/*
 function greet() {
-  Greet(data.name).then(result => {
+  Greet("HELLO WORLB").then(result => {
     data.resultText = result
   })
 }
+*/
 
 </script>
 
 <template>
   <main>
-    <div id="result" class="result">{{ data.resultText }}</div>
-    <div id="input" class="input-box">
-      <input id="name" v-model="data.name" autocomplete="off" class="input" type="text"/>
-      <button class="btn" @click="greet">Greet</button>
-    </div>
+    <b-tabs
+      position="is-centered"
+      class="tabs-block"
+      v-model="data.tabIndex"
+      v-on:change="onTabChange"
+      type="is-boxed"
+      :hoverable="true"
+    >
+      <b-tab-item
+        v-for="tabHeader in TAB_HEADERS"
+        v-bind:key = "tabHeader.title"
+        class="main-tab-item"
+        :label="tabHeader.title"
+      >
+        <template slot="header" class="tab-header">
+          <div class="tab-wrapper">
+            <span class="tab-head-name"> {{ tabHeader.title }} </span>
+            <font-awesome-icon
+              :icon="tabHeader.icon"
+              class="icon alt"
+            >
+            </font-awesome-icon>
+          </div>
+        </template>
+
+      </b-tab-item>
+    </b-tabs>
   </main>
 </template>
 
