@@ -10,9 +10,9 @@ type TabHeader = {
 }
 
 const TAB_HEADERS: TabHeader[] = [
-  {title: "Home", icon: "fa-solid fa-house"},
-  {title: "Settings", icon: "fa-solid fa-gear"},
-  {title: "About", icon: "fa-solid fa-circle-info"},
+  {title: "Home", icon: "fas fa-home"},
+  {title: "Settings", icon: "fas fa-gear"},
+  {title: "About", icon: "fas fa-circle"},
 ]
 
 const data = reactive({
