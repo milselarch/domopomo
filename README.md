@@ -18,3 +18,11 @@ to this in your browser, and you can call your Go code from devtools.
 ## Building
 
 To build a redistributable, production mode package, use `wails build`.
+
+## TODO:
+- add ability to add pomodoro timer rule
+- show existing programs + option to block it
+- add rule to block programs
+- add time slot tracking history
+- add time slot tracking graph
+- add settings page

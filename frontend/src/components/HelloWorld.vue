@@ -67,6 +67,10 @@ function greet() {
 </template>
 
 <style scoped>
+.tabs-block {
+  margin-top: 0.5rem;
+}
+
 .result {
   height: 20px;
   line-height: 20px;
