@@ -1,6 +1,7 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import Buefy from 'buefy'
+import 'buefy/dist/css/buefy.css';
 
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';

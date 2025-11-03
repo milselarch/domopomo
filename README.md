@@ -2,7 +2,8 @@
 
 ## About
 
-This is the official Wails Vue-TS template.
+Node version: v20.19.5  
+This was created using the Wails Vue-TS template.
 
 You can configure the project by editing `wails.json`. More information about the project settings can be found
 here: https://wails.io/docs/reference/project-config
