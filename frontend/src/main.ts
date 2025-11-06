@@ -3,7 +3,7 @@ import App from './App.vue'
 import Buefy from 'buefy'
 import 'buefy/dist/css/buefy.css';
 
-import './style.css';
+import './style.scss';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 import {

@@ -66,9 +66,14 @@ function greet() {
   </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .tabs-block {
   margin-top: 0.5rem;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.tabs-block .tab-head-name {
+  font-size: 5rem !important;
 }
 
 .result {
