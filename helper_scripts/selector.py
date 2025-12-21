@@ -18,9 +18,12 @@ def select_from(filepath: str):
         # content = yaml.safe_load(file)
         tasks_obj = parse_yaml_raw_as(Tasks, file)
         tasks = tasks_obj.tasks
-        weights = [2.0 ** -(k+1) for k in range(len(tasks))]
-        _selected_task = choice(tasks, p=[w / sum(weights) for w in weights])
-        return _selected_task
+
+    weights = [2.0 ** -k for k in range(len(tasks))]
+    scaled_weights = [w / sum(weights) for w in weights]
+    # print(scaled_weights)
+    _selected_task = choice(tasks, p=scaled_weights)
+    return _selected_task
 
 
 if __name__ == '__main__':
