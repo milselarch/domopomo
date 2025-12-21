@@ -19,6 +19,12 @@ to this in your browser, and you can call your Go code from devtools.
 
 To build a redistributable, production mode package, use `wails build`.
 
+## Python Scripts
+
+There are some python scripts in the `helper_scripts/`. They require Python 3.12 to run:  
+1. `python3.12 -m venv venv` - create a virtual environment
+2. `source venv/bin/activate` - activate the virtual environment
+
 ## TODO:
 - add ability to add pomodoro timer rule
 - show existing programs + option to block it

@@ -1,0 +1,4 @@
+numpy==2.4.0
+pyyaml==6.0.1
+pydantic==2.12.5
+pydantic-yaml==1.6.0

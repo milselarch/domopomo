@@ -44,36 +44,31 @@ function greet() {
       type="is-boxed"
       :hoverable="true"
     >
-      <b-tab-item
-        v-for="tabHeader in TAB_HEADERS"
-        v-bind:key = "tabHeader.title"
-        class="main-tab-item"
-        :label="tabHeader.title"
-      >
-        <template slot="header" class="tab-header">
-          <div class="tab-wrapper">
-            <span class="tab-head-name"> {{ tabHeader.title }} </span>
-            <font-awesome-icon
-              :icon="tabHeader.icon"
-              class="icon alt"
-            >
-            </font-awesome-icon>
-          </div>
+      <b-tab-item v-for="tabHeader in TAB_HEADERS" :key="tabHeader.title">
+        <template #header>
+          <span class="tab-head-name">
+            <font-awesome-icon :icon="tabHeader.icon" class="icon alt" />
+            {{ tabHeader.title }}
+          </span>
         </template>
 
+        <div class="tab-wrapper">
+          Content for {{ tabHeader.title }}
+        </div>
       </b-tab-item>
     </b-tabs>
   </main>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .tabs-block {
   margin-top: 0.5rem;
   font-family: "Bebas Neue", sans-serif;
 }
 
-.tabs-block .tab-head-name {
-  font-size: 5rem !important;
+.main-tab-item {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1rem;
 }
 
 .result {
