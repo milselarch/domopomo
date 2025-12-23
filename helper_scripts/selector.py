@@ -11,6 +11,7 @@ class Tasks(BaseModel):
 
 
 def select_from(filepath: str):
+    # select tasks with a exponentially decaying probability
     if not os.path.isabs(filepath):
         filepath = os.path.join(os.path.dirname(__file__), filepath)
 
@@ -23,6 +24,13 @@ def select_from(filepath: str):
     scaled_weights = [w / sum(weights) for w in weights]
     # print(scaled_weights)
     _selected_task = choice(tasks, p=scaled_weights)
+
+    if "/" in _selected_task:
+        # select sub-tasks with uniform probability
+        sub_tasks = [s.strip() for s in _selected_task.split("/")]
+        print(f"Selecting from sub-tasks {sub_tasks}")
+        _selected_task = choice(sub_tasks)
+
     return _selected_task
 
 
