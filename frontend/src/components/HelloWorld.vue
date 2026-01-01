@@ -1,18 +1,23 @@
 <script lang="ts" setup>
 import {reactive} from 'vue'
-import {Greet} from '../../wailsjs/go/main/App'
 import {BTabItem, BTabs} from "buefy";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import type { DefineComponent } from 'vue'
+
+import HomeTab from './tabs/HomeTab.vue'
+import SettingsTab from './tabs/SettingsTab.vue'
+import AboutTab from './tabs/AboutTab.vue'
 
 type TabHeader = {
   title: string
   icon: string
+  component: DefineComponent<any, any, any>
 }
 
 const TAB_HEADERS: TabHeader[] = [
-  {title: "Home", icon: "fas fa-home"},
-  {title: "Settings", icon: "fas fa-gear"},
-  {title: "About", icon: "fas fa-circle"},
+  {title: "Home", icon: "fas fa-home", component: HomeTab},
+  {title: "Settings", icon: "fas fa-gear", component: SettingsTab},
+  {title: "About", icon: "fas fa-circle", component: AboutTab},
 ]
 
 const data = reactive({
@@ -37,6 +42,7 @@ function greet() {
 <template>
   <main>
     <b-tabs
+      :animated="false"
       position="is-centered"
       class="tabs-block"
       v-model="data.tabIndex"
@@ -53,7 +59,7 @@ function greet() {
         </template>
 
         <div class="tab-wrapper">
-          Content for {{ tabHeader.title }}
+          <component :is="tabHeader.component" />
         </div>
       </b-tab-item>
     </b-tabs>
@@ -66,9 +72,17 @@ function greet() {
   font-family: "Bebas Neue", sans-serif;
 }
 
-.main-tab-item {
+span.tab-head-name {
+  /* tab header font */
   font-family: "Bebas Neue", sans-serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  display: flex;
+  gap: 0.5rem;
+
+  & > svg {
+    // remove default margin around fontawesome icons
+    margin: 0 !important;
+  }
 }
 
 .result {
