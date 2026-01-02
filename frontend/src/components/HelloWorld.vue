@@ -72,6 +72,11 @@ function greet() {
   font-family: "Bebas Neue", sans-serif;
 }
 
+* {
+  // default font for everything
+  font-family: "Open Sans", sans-serif;
+}
+
 span.tab-head-name {
   /* tab header font */
   font-family: "Bebas Neue", sans-serif;
