@@ -15,7 +15,8 @@
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "buefy": "^3.0.3",
     "install": "^0.13.0",
-    "vue": "^3.5.21"
+    "vue": "^3.5.21",
+    "vue-router": "^5.0.4"
   },
   "devDependencies": {
     "@babel/types": "^7.18.10",

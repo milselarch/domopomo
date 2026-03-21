@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {BButton, BDropdown, BDropdownItem} from "buefy";
+import { RouterView } from 'vue-router'
 
 const dropdownItems = [
   { value: "TASK", label: "Block Program" },
@@ -27,6 +28,10 @@ const dropdownItems = [
           {{ item.label }}
         </b-dropdown-item>
       </b-dropdown>
+    </div>
+
+    <div>
+      <RouterView />
     </div>
   </main>
 </template>
