@@ -11,7 +11,7 @@ class Tasks(BaseModel):
 
 
 def select_from(filepath: str):
-    # select tasks with a exponentially decaying probability
+    # select tasks with an exponentially decaying probability
     if not os.path.isabs(filepath):
         filepath = os.path.join(os.path.dirname(__file__), filepath)
 
