@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {BButton, BDropdown, BDropdownItem} from "buefy";
-import { RouterView } from 'vue-router'
+import {BBreadcrumb, BBreadcrumbItem, BButton, BDropdown, BDropdownItem} from "buefy";
 
 const dropdownItems = [
   { value: "TASK", label: "Block Program" },
@@ -13,6 +12,14 @@ const dropdownItems = [
 
 <template>
   <main>
+    <b-breadcrumb separator="has-succeeds-separator">
+      <b-breadcrumb-item href="/">Home</b-breadcrumb-item>
+      <b-breadcrumb-item href="/documentation">Docs</b-breadcrumb-item>
+      <b-breadcrumb-item href="/documentation/breadcrumb" active>
+        Breadcrumb
+      </b-breadcrumb-item>
+    </b-breadcrumb>
+
     <div>
       <b-dropdown aria-role="list" :triggers="['hover']">
         <template #trigger="{ active }">
@@ -29,14 +36,14 @@ const dropdownItems = [
         </b-dropdown-item>
       </b-dropdown>
     </div>
-
-    <div>
-      <RouterView />
-    </div>
   </main>
 </template>
 
 <style scoped lang="scss">
+main {
+  display: flex;
+
+}
 .new-rule-button {
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
