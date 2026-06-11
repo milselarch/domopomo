@@ -1,6 +1,7 @@
 import argparse
 import os
 
+from datetime import datetime
 from pydantic import BaseModel
 from pydantic_yaml import parse_yaml_raw_as
 from numpy.random import choice
@@ -51,4 +52,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     selected_task = select_from(args.filepath)
+    print(datetime.now())
     print(selected_task)
