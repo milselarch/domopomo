@@ -17,7 +17,7 @@ type TabHeader = {
 const TAB_HEADERS: TabHeader[] = [
   {title: "Home", icon: "fas fa-home", component: HomeTab},
   {title: "Settings", icon: "fas fa-gear", component: SettingsTab},
-  {title: "About", icon: "fas fa-circle", component: AboutTab},
+  {title: "About", icon: "fas fa-circle-info", component: AboutTab},
 ]
 
 const data = reactive({
@@ -52,10 +52,10 @@ function greet() {
     >
       <b-tab-item v-for="tabHeader in TAB_HEADERS" :key="tabHeader.title">
         <template #header>
-          <span class="tab-head-name">
+          <p class="tab-head-name">
+            <span class="name">{{ tabHeader.title }}</span>
             <font-awesome-icon :icon="tabHeader.icon" class="icon alt" />
-            {{ tabHeader.title }}
-          </span>
+          </p>
         </template>
 
         <div class="tab-wrapper">
@@ -77,16 +77,24 @@ function greet() {
   font-family: "Open Sans", sans-serif;
 }
 
-span.tab-head-name {
+p.tab-head-name {
   /* tab header font */
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 1.2rem;
   display: flex;
+  align-items: center;
   gap: 0.5rem;
 
   & > svg {
     // remove default margin around fontawesome icons
     margin: 0 !important;
+  }
+  & > .icon {
+    width: 1rem;
+    height: 1rem;
+    padding-bottom: 0.3rem;
+  }
+  & >  span.name {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.2rem;
   }
 }
 

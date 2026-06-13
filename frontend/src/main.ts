@@ -10,7 +10,7 @@ import {
   faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle,
   faArrowUp, faAngleRight, faAngleLeft, faAngleDown,
   faEye, faEyeSlash, faCaretDown, faCaretUp, faUpload,
-  faHome, faGear, faCircle
+  faHome, faGear, faCircle, faCircleH
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -19,7 +19,7 @@ library.add(
   faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle,
   faArrowUp, faAngleRight, faAngleLeft, faAngleDown,
   faEye, faEyeSlash, faCaretDown, faCaretUp, faUpload,
-  faHome, faGear, faCircle
+  faHome, faGear, faCircle, faCircleH
 );
 
 const app = createApp(App)
