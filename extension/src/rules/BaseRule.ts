@@ -12,12 +12,24 @@ export enum BlockType {
   AGGREGATION_GROUP = 'AGGREGATION_GROUP',
 }
 
+interface BrowseState {
+  url: string
+  timestamp: number
+}
+
+export interface RuleInterface {
+  getID(): number | null
+  getBlockType(): BlockType
+  test(input: BrowseState): boolean
+  isDifferent(other: this): boolean
+}
+
 interface BaseRuleParams {
   id: number | null
   blockType?: BlockType
 }
 
-export class BaseRule {
+export class BaseRule implements RuleInterface {
   private blockType: BlockType
   private saved: boolean
   private id: number | null
@@ -29,6 +41,25 @@ export class BaseRule {
     this.id = id
     this.blockType = blockType
     this.saved = false
+  }
+
+  getBlockType(): BlockType {
+    return this.blockType
+  }
+
+  getID(): number | null {
+    return this.id
+  }
+
+  test(input: BrowseState): boolean {
+    return false
+  }
+
+  isDifferent(other: BaseRule) {
+    return (
+      this.blockType !== other.blockType ||
+      this.saved !== other.saved
+    )
   }
 }
 
@@ -43,7 +74,7 @@ export type BlockUrlRuleParams = BaseRuleParams & {
   matchPatternType: MatchPatternType
 }
 
-class BlockUrlRule extends BaseRule {
+class BlockUrlRule extends BaseRule implements RuleInterface {
   private matchPattern: string
   private matchPatternType: MatchPatternType
 
@@ -55,7 +86,7 @@ class BlockUrlRule extends BaseRule {
     this.matchPatternType = matchPatternType
   }
 
-  test(url: string) {
+  override test(url: string) {
     let matcher = this.matchPattern
     let regexMatcher: RegExp
 
@@ -73,5 +104,13 @@ class BlockUrlRule extends BaseRule {
       default:
         throw new Error('Invalid matchPatternType')
     }
+  }
+
+  override isDifferent(other: BlockUrlRule) {
+    return (
+      super.isDifferent(other) ||
+      this.matchPattern !== other.matchPattern ||
+      this.matchPatternType !== other.matchPatternType
+    )
   }
 }
