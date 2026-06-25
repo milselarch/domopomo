@@ -95,26 +95,26 @@ function greet() {
 }
 
 /*
-This is needed to ovveride default linlk transition color
+This is needed to override default link transition color
 from bulma.
 */
 // TODO: move the colors out to their own variables in theme.scss
-// TODO: make the tabs scss unverisal across the project maybe?
+// TODO: make the tabs scss universal across the project maybe?
 /* Base tab link color + transition */
 .tabs-block .tabs a {
-  color: #b0b0b0 !important;
+  color: theme.$muted-text !important;
   transition: color 180ms ease, border-color 180ms ease;
 }
 
 /* Active tab color */
 .tabs-block .tabs li.is-active a {
-  color: #ff3b30 !important;          /* your chosen color */
+  color: theme.$primary !important;          /* your chosen color */
   // border-color: #ff3b30 !important;   /* for boxed/underline effect */
 }
 
 /* Optional hover color (non-active) */
 .tabs-block .tabs li:not(.is-active) a:hover {
-  color: #ff6b63 !important;
+  color: theme.$primary-hover !important;
 }
 
 p.tab-head-name {

@@ -1,6 +1,9 @@
 /* ── Approach A: Sass variables (requires recompilation) ──────────────────── */
 
 $primary: #e84444;
+$muted-text: #b0b0b0;
+$primary-hover: #ff6b63;
+
 
 // main.scss
 @use "bulma/sass" with (
