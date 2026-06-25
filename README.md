@@ -1,3 +1,34 @@
+# DOMOPOMO
+
+Desktop blocker + browser extension to prevent demonic megacorps from trapping 
+you in the infinite torment nexus of distraction and siphoning off your 
+immortal soul.
+
+## TODO
+1. desktop
+   1. block application rule
+   2. task manager to block sites from
+      1. windows
+      2. linux
+   3. set password rule
+   4. allowance rule
+   5. rule nesting
+   6. pomodoro rule
+   7. time of day / day of week rule
+2. extensions
+   1. block website rule
+   2. set password rule
+   3. allowance rule
+   4. rule nesting
+   5. pomodoro rule
+   6. time of day / day of week rule
+3. support light / dark mode toggle
+4. design a new logo
+5. site landing page
+
+stretch goals
+1. extension / desktop synch
+
 # Welcome to Your New Wails3 Project!
 
 Congratulations on generating your Wails3 application! This README will guide you through the next steps to get your project up and running.
