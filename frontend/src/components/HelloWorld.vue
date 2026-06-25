@@ -50,11 +50,26 @@ function greet() {
       type="is-boxed"
       :hoverable="true"
     >
-      <b-tab-item v-for="tabHeader in TAB_HEADERS" :key="tabHeader.title">
+      <b-tab-item
+        v-for="(tabHeader, index) in TAB_HEADERS" :key="tabHeader.title"
+        :class="{ 'active': data.tabIndex === index }"
+      >
         <template #header>
-          <p class="tab-head-name">
-            <span class="name">{{ tabHeader.title }}</span>
-            <font-awesome-icon :icon="tabHeader.icon" class="icon alt" />
+          <p
+            class="tab-head-name"
+            :class="{ 'active': data.tabIndex === index }"
+          >
+            <span
+              class="name"
+              :class="{ 'active': data.tabIndex === index }"
+            >
+              {{ tabHeader.title }}
+            </span>
+
+            <font-awesome-icon
+              :icon="tabHeader.icon" class="icon alt"
+              :class="{ 'active': data.tabIndex === index }"
+            />
           </p>
         </template>
 
@@ -67,6 +82,8 @@ function greet() {
 </template>
 
 <style lang="scss">
+@use "../styles/theme.scss" as theme;
+
 .tabs-block {
   margin-top: 0.5rem;
   font-family: "Bebas Neue", sans-serif;
@@ -77,11 +94,42 @@ function greet() {
   font-family: "Open Sans", sans-serif;
 }
 
+/*
+This is needed to ovveride default linlk transition color
+from bulma.
+*/
+// TODO: move the colors out to their own variables in theme.scss
+// TODO: make the tabs scss unverisal across the project maybe?
+/* Base tab link color + transition */
+.tabs-block .tabs a {
+  color: #b0b0b0 !important;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+/* Active tab color */
+.tabs-block .tabs li.is-active a {
+  color: #ff3b30 !important;          /* your chosen color */
+  // border-color: #ff3b30 !important;   /* for boxed/underline effect */
+}
+
+/* Optional hover color (non-active) */
+.tabs-block .tabs li:not(.is-active) a:hover {
+  color: #ff6b63 !important;
+}
+
 p.tab-head-name {
   /* tab header font */
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  &:pressed {
+    color: theme.$primary !important;
+  }
+
+  & .active {
+    color: theme.$primary !important;
+  }
 
   & > svg {
     // remove default margin around fontawesome icons
@@ -92,7 +140,7 @@ p.tab-head-name {
     height: 1rem;
     padding-bottom: 0.3rem;
   }
-  & >  span.name {
+  & > span.name {
     font-family: "Bebas Neue", sans-serif;
     font-size: 1.2rem;
   }

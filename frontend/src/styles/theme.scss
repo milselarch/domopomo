@@ -1,8 +1,10 @@
 /* ── Approach A: Sass variables (requires recompilation) ──────────────────── */
 
+$primary: #e84444;
+
 // main.scss
 @use "bulma/sass" with (
-  $primary: #e84444,
+  $primary: $primary,
   $family-sans-serif: ("Open Sans", sans-serif),
   $link: #8a2be2,
 );
