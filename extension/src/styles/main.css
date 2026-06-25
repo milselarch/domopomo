@@ -1,0 +1,102 @@
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+}
+
+.btn {
+  @apply px-4 py-1 rounded inline-block
+    bg-teal-600 text-white cursor-pointer
+    hover:bg-teal-700
+    disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50;
+}
+
+/*
+Source - https://stackoverflow.com/a/4407335
+Posted by Blowsie, modified by community. See post 'Timeline' for change history
+Retrieved 2026-06-15, License - CC BY-SA 4.0
+*/
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.icon-btn {
+  @apply inline-block cursor-pointer select-none
+    opacity-75 transition duration-200 ease-in-out
+    hover:opacity-100 hover:text-teal-600;
+  font-size: 0.9em;
+}
+
+* {
+  font-size: 1rem;
+  font-family: 'Open-Sans',sans-serif;
+}
+
+input {
+  border: 2px solid #DDD;
+  border-radius: 0.25rem;
+  padding: 0.3rem;
+  flex-grow: 1;
+
+  &:hover {
+    border: 2px solid #BBB;
+  }
+  &:focus {
+    border: 2px solid #666;
+  }
+}
+
+h1 {
+  font-family: "Bebas-Neue", sans-serif;
+  font-size: 2rem;
+  line-height: normal;
+}
+
+* {
+  font-size: 1rem;
+}
+/*
+button {
+  border: 2px solid #DDD;
+  border-radius: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  &:hover {
+    border: 2px solid #BBB;
+  }
+  &:active {
+    border: 2px solid #666;
+  }
+}
+*/
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+@font-face {
+  font-family: "Bebas-Neue";
+  /* src: url("~/assets/BebasNeue.ttf") format("truetype"); */
+  src: url("~/assets/BebasNeue.ttf") format("truetype");
+  /* Add other formats as you see fit */
+}
+
+@font-face {
+  font-family: "Open-Sans";
+  src: url("~/assets/OpenSans.ttf") format("truetype");
+  /* Add other formats as you see fit */
+}
+
+h1 {
+  font-size: 2rem;
+  font-family: "Bebas-Neue", sans-serif;
+}
