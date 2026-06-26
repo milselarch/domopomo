@@ -8,37 +8,19 @@ import { BButton, BDropdown, BDropdownItem, BIcon, BInput } from 'buefy'
 import type { BlockUrlRule } from './rules'
 import BlockWebsiteEditor from './BlockWebsiteEditor.vue'
 import SettingsView from './SettingsView.vue'
+import {BaseRule} from "~/rules/BaseRule";
 
 const settingsEnabled = ref(false)
+const rules = ref<BaseRule[]>([])
 
+const addBlockUrlRule = () => {
+  // TODO: fill up rules, populate frontend
+  // TODO: sync with chrome storage
+  // TODO: initial load from chrome storage
+  const newRule: BlockUrlRule = new BlockUrlRule(
 
-</script>
-
-<script lang="ts">
-export default {
-  components: {
-    BlockWebsiteEditor,
-  },
-  data() {
-    return {
-      rules: [] as BlockUrlRule[],
-    }
-  },
-  methods: {
-    addUrlRule() {
-      const url = window.location.host + window.location.pathname
-      const ruleID = this.rules.length + 1
-
-      const newRule: BlockUrlRule = {
-        blockType: 'BLOCK',
-        ID: ruleID,
-        matchPattern: url,
-        matchPatternType: 'TEXT',
-        saved: false,
-      }
-      this.rules.push(newRule)
-    },
-  },
+  )
+  rules.value.push(newRule)
 }
 </script>
 
