@@ -25,12 +25,13 @@ const data = reactive({
   tabIndex: 1,
 })
 
+/*
 // Listen for when the window gains focus
 Events.On('time', (event) => {
   console.log('TIME_EVENT', event);
   // Maybe refresh some data or resume animations
 });
-
+*/
 
 const onTabChange = (newIndex: number) => {
   console.log("Tab changed to index:", newIndex)
