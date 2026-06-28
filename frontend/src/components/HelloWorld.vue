@@ -2,6 +2,7 @@
 import {reactive} from 'vue'
 import {BTabItem, BTabs} from "buefy";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { Events } from '@wailsio/runtime';
 import type { DefineComponent } from 'vue'
 
 import HomeTab from './tabs/HomeTab.vue'
@@ -23,6 +24,13 @@ const TAB_HEADERS: TabHeader[] = [
 const data = reactive({
   tabIndex: 1,
 })
+
+// Listen for when the window gains focus
+Events.On('time', (event) => {
+  console.log('TIME_EVENT', event);
+  // Maybe refresh some data or resume animations
+});
+
 
 const onTabChange = (newIndex: number) => {
   console.log("Tab changed to index:", newIndex)
