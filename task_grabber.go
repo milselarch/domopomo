@@ -42,7 +42,34 @@ func New() *Tasky {
 	return &Tasky{}
 }
 
-func (t *Tasky) GetWindowsTasks(callback func(Task)) ([]Task, error) {
+func splitPIDValue(line string) (pid string, value string, ok bool) {
+	i := 0
+	for i < len(line) && line[i] != ' ' && line[i] != '\t' {
+		i++
+	}
+	if i == 0 {
+		return "", "", false
+	}
+	pid = line[:i]
+	value = strings.TrimSpace(line[i:])
+	return pid, value, true
+}
+
+// Converts tasklist cpu time like HH:MM:SS or H:MM:SS to seconds.
+func parseCPUTimestampSeconds(s string) float64 {
+	parts := strings.Split(strings.TrimSpace(s), ":")
+	if len(parts) != 3 {
+		return 0
+	}
+	h, _ := strconv.Atoi(parts[0])
+	m, _ := strconv.Atoi(parts[1])
+	sec, _ := strconv.Atoi(parts[2])
+	return float64(h*3600 + m*60 + sec)
+}
+
+func (t *Tasky) GetWindowsTasks(
+	callback func(Task),
+) ([]Task, error) {
 	if runtime.GOOS != "windows" {
 		return nil, errors.New("windows only")
 	}
@@ -106,7 +133,9 @@ const (
 	psUnixFlagsDefault = "wwxo"
 )
 
-func (t *Tasky) GetUnixTasks(all bool, callback func(Task)) ([]Task, error) {
+func (t *Tasky) GetUnixTasks(
+	all bool, callback func(Task),
+) ([]Task, error) {
 	if callback == nil {
 		callback = func(Task) {}
 	}
@@ -212,27 +241,49 @@ func (t *Tasky) GetUnixTasks(all bool, callback func(Task)) ([]Task, error) {
 	return tasks, nil
 }
 
-func splitPIDValue(line string) (pid string, value string, ok bool) {
-	i := 0
-	for i < len(line) && line[i] != ' ' && line[i] != '\t' {
-		i++
-	}
-	if i == 0 {
-		return "", "", false
-	}
-	pid = line[:i]
-	value = strings.TrimSpace(line[i:])
-	return pid, value, true
+type Pair[T, U any] struct {
+	First  T
+	Second U
 }
 
-// Converts tasklist cpu time like HH:MM:SS or H:MM:SS to seconds.
-func parseCPUTimestampSeconds(s string) float64 {
-	parts := strings.Split(strings.TrimSpace(s), ":")
-	if len(parts) != 3 {
-		return 0
+func (t *Tasky) GetUniqueTasks(tasks []Task) []Task {
+	uniqueTaskMap := make(map[Pair[string, string]]Task)
+
+	for _, task := range tasks {
+		key := Pair[string, string]{First: task.Name, Second: task.Program}
+		_, exists := uniqueTaskMap[key]
+		isUnique := !exists
+
+		if isUnique && task.CPU > 0 {
+			uniqueTaskMap[key] = task
+		}
 	}
-	h, _ := strconv.Atoi(parts[0])
-	m, _ := strconv.Atoi(parts[1])
-	sec, _ := strconv.Atoi(parts[2])
-	return float64(h*3600 + m*60 + sec)
+
+	uniqueTasks := make([]Task, 0, len(uniqueTaskMap))
+	for _, task := range uniqueTaskMap {
+		uniqueTasks = append(uniqueTasks, task)
+	}
+
+	return uniqueTasks
+}
+
+func (t *Tasky) LoadTasks(callback func(Task)) ([]Task, error) {
+	var allTasks []Task
+
+	if runtime.GOOS == "windows" {
+		windowsTasks, err := t.GetWindowsTasks(callback)
+		if err != nil {
+			return nil, err
+		}
+		allTasks = windowsTasks
+	} else {
+		unixTasks, err := t.GetUnixTasks(true, callback)
+		if err != nil {
+			return nil, err
+		}
+		allTasks = unixTasks
+	}
+	// TODO: exclude own process(es) from the list
+	allTasks = t.GetUniqueTasks(allTasks)
+	return allTasks, nil
 }
