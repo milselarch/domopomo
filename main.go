@@ -64,14 +64,14 @@ func main() {
 		URL:              "/",
 	})
 
-	taskGrabber := Tasky{}
+	// taskGrabber := Tasky{}
 
 	// Create a goroutine that emits an event containing the current time every second.
 	// The frontend can listen to this event and update the UI accordingly.
 	go func() {
 		for {
 			// TODO: pipe to channel or smth
-			tasks := taskGrabber.LoadTasks()
+			// tasks := taskGrabber.LoadTasks()
 
 			now := time.Now().Format(time.RFC1123)
 			app.Event.Emit("time", now)
