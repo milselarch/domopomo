@@ -10,3 +10,4 @@ venv/
 
 helper_scripts/*.yml
 !helper_scripts/*.example.yml
+.task/

@@ -14,7 +14,7 @@ class Tasks(BaseModel):
 def select_from(filepath: str):
     # select tasks with an exponentially decaying probability
     if not os.path.isabs(filepath):
-        filepath = os.path.join(os.path.dirname(__file__), filepath)
+        filepath = os.path.join(str(os.path.dirname(__file__)), filepath)
 
     with open(filepath, 'r') as file:
         # content = yaml.safe_load(file)
