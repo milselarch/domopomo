@@ -5,21 +5,19 @@ function openOptionsPage() {
 }
 */
 import { BButton, BDropdown, BDropdownItem, BIcon, BInput } from 'buefy'
-import type { BlockUrlRule } from './rules'
 import BlockWebsiteEditor from './BlockWebsiteEditor.vue'
 import SettingsView from './SettingsView.vue'
 import {BaseRule} from "~/rules/BaseRule";
+import {BlockUrlRule} from "~/rules/BlockUrlRule";
 
 const settingsEnabled = ref(false)
-const rules = ref<BaseRule[]>([])
+const rules = ref<BaseRule<unknown>[]>([])
 
 const addBlockUrlRule = () => {
   // TODO: fill up rules, populate frontend
   // TODO: sync with chrome storage
   // TODO: initial load from chrome storage
-  const newRule: BlockUrlRule = new BlockUrlRule(
-
-  )
+  const newRule: BlockUrlRule = new BlockUrlRule()
   rules.value.push(newRule)
 }
 </script>

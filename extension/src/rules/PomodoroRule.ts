@@ -1,3 +1,4 @@
+import type { BaseRuleParams, BrowseState } from '~/rules/BaseRule'
 import { BaseRule } from '~/rules/BaseRule'
 
 export type PomodoroRuleParams = BaseRuleParams & {
@@ -6,7 +7,7 @@ export type PomodoroRuleParams = BaseRuleParams & {
   longBreakDuration: number
 }
 
-class PomodoroRule extends BaseRule<PomodoroRule> {
+export class PomodoroRule extends BaseRule<PomodoroRule> {
   private duration: number
   private shortBreakDuration: number
   private longBreakDuration: number

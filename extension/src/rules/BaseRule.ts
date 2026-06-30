@@ -24,6 +24,7 @@ export interface RuleInterface {
 
 export interface BaseRuleParams {
   id: number | null
+  name: string
   isReadOnly: boolean
   blockType?: BlockType
 }
@@ -34,14 +35,17 @@ export abstract class BaseRule<
   private readonly blockType: BlockType
   private isReadOnly: boolean
   private saved: boolean
+  private name: string
   private id: number | null
 
   constructor({
-    id = null,
+    id,
+    name,
     isReadOnly = false,
     blockType = BlockType.BLOCK_URL,
   }: BaseRuleParams) {
     this.id = id
+    this.name = name
     this.blockType = blockType
     this.isReadOnly = isReadOnly
     this.saved = false
@@ -64,6 +68,7 @@ export abstract class BaseRule<
       this.blockType !== other.blockType
       || this.isReadOnly !== other.isReadOnly
       || this.saved !== other.saved
+      || this.name !== other.name
     )
   }
 }
