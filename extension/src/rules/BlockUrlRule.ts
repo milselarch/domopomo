@@ -10,21 +10,16 @@ export type BlockUrlRuleParams = BaseRuleParams & {
   timeout: number | null
 }
 
-class BlockUrlRule extends BaseRule<BlockUrlRule> implements RuleInterface {
+export class BlockUrlRule extends BaseRule<BlockUrlRule> implements RuleInterface {
   private matchPattern: string
   private matchPatternType: MatchPatternType
   private timeout: number | null
 
-  constructor({
-    id = null,
-    isReadOnly = false,
-    blockType, matchPattern, matchPatternType,
-    timeout,
-  }: BlockUrlRuleParams) {
-    super({ id, isReadOnly, blockType })
-    this.matchPattern = matchPattern
-    this.matchPatternType = matchPatternType
-    this.timeout = timeout
+  constructor(params: BlockUrlRuleParams) {
+    super(params)
+    this.matchPattern = params.matchPattern
+    this.matchPatternType = params.matchPatternType
+    this.timeout = params.timeout
   }
 
   override test(input: BrowseState): boolean {
