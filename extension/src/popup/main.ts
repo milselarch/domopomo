@@ -13,12 +13,11 @@ import {
   faGear, faHome, faMagnifyingGlass, faMoon, faPlus, faSun,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { storeKey } from 'vuex'
 import App from './Popup.vue'
 import { setupApp } from '~/logic/common-setup'
 import '~/styles/theme.scss'
 import '~/styles/main.css'
-import { store } from '~/storage/store'
+import { StoreKey, store } from '~/storage/store'
 
 library.add(
   faGear, faMagnifyingGlass, faPlus, faHome,
@@ -31,8 +30,7 @@ app.use(Buefy, {
   defaultIconPack: 'fas',
 })
 
-app.use(store, storeKey)
-// eslint-disable-next-line vue/component-definition-name-casing
+app.use(store, StoreKey)
 app.component('vue-fontawesome', FontAwesomeIcon)
 app.component('Popper', Popper)
 

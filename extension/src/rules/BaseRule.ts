@@ -1,4 +1,5 @@
 export enum BlockType {
+  BASE_RULE = 'BASE_RULE',
   BLOCK_URL = 'BLOCK_URL',
   POMODORO = 'POMODORO',
   PASSWORD_GROUP = 'PASSWORD_GROUP',
@@ -24,9 +25,10 @@ export interface RuleInterface {
 
 export interface BaseRuleParams {
   id: number | null
+  ordering: number | null
   name: string
   isReadOnly: boolean
-  blockType?: BlockType
+  blockType: BlockType
 }
 
 export abstract class BaseRule<
@@ -34,21 +36,31 @@ export abstract class BaseRule<
 > implements RuleInterface {
   private readonly blockType: BlockType
   private isReadOnly: boolean
+  private ordering: number | null
   private saved: boolean
   private name: string
   private id: number | null
 
-  constructor({
-    id,
-    name,
-    isReadOnly = false,
-    blockType = BlockType.BLOCK_URL,
-  }: BaseRuleParams) {
-    this.id = id
-    this.name = name
-    this.blockType = blockType
-    this.isReadOnly = isReadOnly
+  protected constructor(params: BaseRuleParams | null = null) {
+    if (params === null) {
+      params = this.generateDefaultParams()
+    }
+    this.id = params.id
+    this.name = params.name
+    this.ordering = params.ordering
+    this.blockType = params.blockType
+    this.isReadOnly = params.isReadOnly
     this.saved = false
+  }
+
+  generateDefaultParams(): BaseRuleParams {
+    return {
+      id: null,
+      name: '',
+      ordering: null,
+      isReadOnly: false,
+      blockType: BlockType.BASE_RULE,
+    }
   }
 
   getBlockType(): BlockType {
@@ -59,7 +71,7 @@ export abstract class BaseRule<
     return this.id
   }
 
-  test(input: BrowseState): boolean {
+  test(/*input: BrowseState*/): boolean {
     return false
   }
 
@@ -69,6 +81,7 @@ export abstract class BaseRule<
       || this.isReadOnly !== other.isReadOnly
       || this.saved !== other.saved
       || this.name !== other.name
+      || this.ordering !== other.ordering
     )
   }
 }

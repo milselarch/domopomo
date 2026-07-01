@@ -4,21 +4,23 @@ function openOptionsPage() {
   browser.runtime.openOptionsPage()
 }
 */
+import { ref } from 'vue'
 import { BButton, BDropdown, BDropdownItem, BIcon, BInput } from 'buefy'
 import BlockWebsiteEditor from './BlockWebsiteEditor.vue'
 import SettingsView from './SettingsView.vue'
-import {BaseRule} from "~/rules/BaseRule";
-import {BlockUrlRule} from "~/rules/BlockUrlRule";
+import { BlockUrlRule } from '~/rules/BlockUrlRule'
+import type { BlockRules } from '~/rules'
 
 const settingsEnabled = ref(false)
-const rules = ref<BaseRule<unknown>[]>([])
+const rules = ref<BlockRules[]>([])
 
 const addBlockUrlRule = () => {
   // TODO: fill up rules, populate frontend
   // TODO: sync with chrome storage
   // TODO: initial load from chrome storage
-  const newRule: BlockUrlRule = new BlockUrlRule()
+  const newRule: BlockUrlRule = new BlockUrlRule(null)
   rules.value.push(newRule)
+  console.log('added new rule', newRule)
 }
 </script>
 
@@ -53,7 +55,7 @@ const addBlockUrlRule = () => {
       </BButton>
     </div>
 
-    <div id="content">
+    <div id="top-header">
       <div class="rules-view">
         <div
           v-for="(rule, index) in rules" :key="index"
@@ -67,6 +69,10 @@ const addBlockUrlRule = () => {
       </div>
 
       <SettingsView v-show="settingsEnabled" />
+    </div>
+
+    <div id="rules-view">
+      <RuleView v-for="(rule, index) in rules" :key="index" :rule="rule" />
     </div>
 
     <div id="search-bar">
@@ -127,7 +133,7 @@ main {
     }
   }
 
-  & > div#content {
+  & > div#top-header {
     flex-grow: 1;
     display: flex;
     flex-direction: column;

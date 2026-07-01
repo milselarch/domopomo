@@ -1,5 +1,7 @@
 import { wildcardToRegExp } from '~/misc'
-import type { BaseRuleParams, BrowseState, RuleInterface } from '~/rules/BaseRule'
+import {
+  BaseRuleParams, BlockType, BrowseState, RuleInterface,
+} from '~/rules/BaseRule'
 import {
   BaseRule, MatchPatternType,
 } from '~/rules/BaseRule'
@@ -7,7 +9,7 @@ import {
 export type BlockUrlRuleParams = BaseRuleParams & {
   matchPattern: string
   matchPatternType: MatchPatternType
-  timeout: number | null
+  timeout: number
 }
 
 export class BlockUrlRule extends BaseRule<BlockUrlRule> implements RuleInterface {
@@ -15,11 +17,24 @@ export class BlockUrlRule extends BaseRule<BlockUrlRule> implements RuleInterfac
   private matchPatternType: MatchPatternType
   private timeout: number | null
 
-  constructor(params: BlockUrlRuleParams) {
+  constructor(params: BlockUrlRuleParams | null = null) {
     super(params)
+    if (params === null) {
+      params = this.generateDefaultParams()
+    }
     this.matchPattern = params.matchPattern
     this.matchPatternType = params.matchPatternType
     this.timeout = params.timeout
+  }
+
+  override generateDefaultParams(): BlockUrlRuleParams {
+    return {
+      ...super.generateDefaultParams(),
+      matchPattern: '',
+      matchPatternType: MatchPatternType.TEXT,
+      timeout: 0,
+      blockType: BlockType.BLOCK_URL,
+    }
   }
 
   override test(input: BrowseState): boolean {
