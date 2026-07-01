@@ -67,16 +67,10 @@ func parseCPUTimestampSeconds(s string) float64 {
 	return float64(h*3600 + m*60 + sec)
 }
 
-func (t *Tasky) GetWindowsTasks(
-	callback func(Task),
-) ([]Task, error) {
+func (t *Tasky) GetWindowsTasks() ([]Task, error) {
 	if runtime.GOOS != "windows" {
 		return nil, errors.New("windows only")
 	}
-	if callback == nil {
-		callback = func(Task) {}
-	}
-
 	cmd := exec.Command("cmd", "/C", "@chcp65001 >nul & tasklist /v /nh /fo csv")
 	out, err := cmd.Output()
 	if err != nil {
@@ -121,7 +115,6 @@ func (t *Tasky) GetWindowsTasks(
 			Program: strings.TrimSpace(row[0]),
 			CPU:     cpuTime,
 		}
-		callback(task)
 		tasks = append(tasks, task)
 	}
 
@@ -133,13 +126,7 @@ const (
 	psUnixFlagsDefault = "wwxo"
 )
 
-func (t *Tasky) GetUnixTasks(
-	all bool, callback func(Task),
-) ([]Task, error) {
-	if callback == nil {
-		callback = func(Task) {}
-	}
-
+func (t *Tasky) GetUnixTasks(all bool) ([]Task, error) {
 	headers := []string{"comm", "args", "%cpu"}
 	flags := psUnixFlagsAll
 	if !all {
@@ -169,6 +156,7 @@ func (t *Tasky) GetUnixTasks(
 
 	for _, col := range headers {
 		wg.Add(1)
+
 		go func(cmdCol string) {
 			defer wg.Done()
 
@@ -189,12 +177,10 @@ func (t *Tasky) GetUnixTasks(
 				if line == "" {
 					continue
 				}
-
 				pidStr, value, ok := splitPIDValue(line)
 				if !ok {
 					continue
 				}
-
 				pid, e := strconv.Atoi(pidStr)
 				if e != nil || pid == 0 {
 					continue
@@ -226,7 +212,6 @@ func (t *Tasky) GetUnixTasks(
 					taskCopy := st.task
 					tasks = append(tasks, taskCopy)
 					mu.Unlock()
-					callback(taskCopy)
 					continue
 				}
 				mu.Unlock()
@@ -267,17 +252,17 @@ func (t *Tasky) GetUniqueTasks(tasks []Task) []Task {
 	return uniqueTasks
 }
 
-func (t *Tasky) LoadTasks(callback func(Task)) ([]Task, error) {
+func (t *Tasky) LoadTasks() ([]Task, error) {
 	var allTasks []Task
 
 	if runtime.GOOS == "windows" {
-		windowsTasks, err := t.GetWindowsTasks(callback)
+		windowsTasks, err := t.GetWindowsTasks()
 		if err != nil {
 			return nil, err
 		}
 		allTasks = windowsTasks
 	} else {
-		unixTasks, err := t.GetUnixTasks(true, callback)
+		unixTasks, err := t.GetUnixTasks(true)
 		if err != nil {
 			return nil, err
 		}
