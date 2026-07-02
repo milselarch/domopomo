@@ -12,7 +12,7 @@ export type BlockUrlRuleParams = BaseRuleParams & {
   timeout: number
 }
 
-export class BlockUrlRule extends BaseRule<BlockUrlRule> implements RuleInterface {
+export class BlockUrlRule extends BaseRule<RuleInterface> {
   private matchPattern: string
   private matchPatternType: MatchPatternType
   private timeout: number | null
@@ -61,12 +61,20 @@ export class BlockUrlRule extends BaseRule<BlockUrlRule> implements RuleInterfac
     }
   }
 
-  override isDifferent(other: BlockUrlRule) {
+  getBlockType(): BlockType {
+    return BlockType.BLOCK_URL
+  }
+
+  override isDifferent(other: BaseRule<never>): boolean {
+    if (other.getBlockType() !== this.getBlockType()) {
+      return true
+    }
+    const otherRule = other as unknown as BlockUrlRule
     return (
       super.isDifferent(other)
-      || this.matchPattern !== other.matchPattern
-      || this.matchPatternType !== other.matchPatternType
-      || this.timeout !== other.timeout
+      || this.matchPattern !== otherRule.matchPattern
+      || this.matchPatternType !== otherRule.matchPatternType
+      || this.timeout !== otherRule.timeout
     )
   }
 }

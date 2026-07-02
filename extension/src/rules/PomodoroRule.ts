@@ -1,4 +1,4 @@
-import type { BaseRuleParams, BrowseState } from '~/rules/BaseRule'
+import {BaseRuleParams, BlockType, BrowseState, RuleInterface} from '~/rules/BaseRule'
 import { BaseRule } from '~/rules/BaseRule'
 
 export type PomodoroRuleParams = BaseRuleParams & {
@@ -7,7 +7,7 @@ export type PomodoroRuleParams = BaseRuleParams & {
   longBreakDuration: number
 }
 
-export class PomodoroRule extends BaseRule<PomodoroRule> {
+export class PomodoroRule extends BaseRule<RuleInterface> {
   private duration: number
   private shortBreakDuration: number
   private longBreakDuration: number
@@ -27,12 +27,20 @@ export class PomodoroRule extends BaseRule<PomodoroRule> {
     return false
   }
 
-  override isDifferent(other: PomodoroRule): boolean {
+  override getBlockType(): BlockType {
+    return BlockType.POMODORO
+  }
+
+  override isDifferent(other: BaseRule<RuleInterface>): boolean {
+    if (other.getBlockType() !== this.getBlockType()) {
+      return true
+    }
+    const otherRule = other as unknown as PomodoroRule
     return (
       super.isDifferent(other)
-      || this.duration !== other.duration
-      || this.shortBreakDuration !== other.shortBreakDuration
-      || this.longBreakDuration !== other.longBreakDuration
+      || this.duration !== otherRule.duration
+      || this.shortBreakDuration !== otherRule.shortBreakDuration
+      || this.longBreakDuration !== otherRule.longBreakDuration
     )
   }
 }

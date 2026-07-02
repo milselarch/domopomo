@@ -17,7 +17,9 @@
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@wailsio/runtime": "latest",
     "buefy": "^3.0.4",
+    "jquery": "^4.0.0",
     "luxon": "^3.7.2",
+    "regex-colorizer": "^1.0.2",
     "vue": "^3.5.32",
     "vuex": "^4.0.2",
     "z-vuex-typed": "^0.2.11"

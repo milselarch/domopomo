@@ -1,5 +1,4 @@
 export enum BlockType {
-  BASE_RULE = 'BASE_RULE',
   BLOCK_URL = 'BLOCK_URL',
   POMODORO = 'POMODORO',
   PASSWORD_GROUP = 'PASSWORD_GROUP',
@@ -32,7 +31,7 @@ export interface BaseRuleParams {
 }
 
 export abstract class BaseRule<
-  TSelf extends BaseRule<TSelf>,
+  TSelf extends RuleInterface,
 > implements RuleInterface {
   private readonly blockType: BlockType
   private isReadOnly: boolean
@@ -54,18 +53,17 @@ export abstract class BaseRule<
   }
 
   generateDefaultParams(): BaseRuleParams {
+    const blockType = this.getBlockType()
     return {
       id: null,
       name: '',
       ordering: null,
       isReadOnly: false,
-      blockType: BlockType.BASE_RULE,
+      blockType: blockType,
     }
   }
 
-  getBlockType(): BlockType {
-    return this.blockType
-  }
+  abstract getBlockType(): BlockType
 
   getID(): number | null {
     return this.id
@@ -76,12 +74,16 @@ export abstract class BaseRule<
   }
 
   isDifferent(other: TSelf) {
+    if (other.getBlockType() !== this.getBlockType()) {
+      return true
+    }
+    const otherRule = other as unknown as BaseRule<RuleInterface>
     return (
-      this.blockType !== other.blockType
-      || this.isReadOnly !== other.isReadOnly
-      || this.saved !== other.saved
-      || this.name !== other.name
-      || this.ordering !== other.ordering
+      this.blockType !== otherRule.blockType
+      || this.isReadOnly !== otherRule.isReadOnly
+      || this.saved !== otherRule.saved
+      || this.name !== otherRule.name
+      || this.ordering !== otherRule.ordering
     )
   }
 }

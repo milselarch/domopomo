@@ -21,6 +21,7 @@ const ruleID = computed(() => {
 
 <template>
   <div>
+    <p>Block Type: {{ blockType }}</p>
     <div v-if="blockType === BlockType.BLOCK_URL">
       <p>Block URL Rule: {{ ruleID }}</p>
     </div>

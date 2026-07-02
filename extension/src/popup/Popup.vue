@@ -10,6 +10,7 @@ import BlockWebsiteEditor from './BlockWebsiteEditor.vue'
 import SettingsView from './SettingsView.vue'
 import { BlockUrlRule } from '~/rules/BlockUrlRule'
 import type { BlockRules } from '~/rules'
+import RuleView from "~/popup/RuleView.vue";
 
 const settingsEnabled = ref(false)
 const rules = ref<BlockRules[]>([])
@@ -20,7 +21,7 @@ const addBlockUrlRule = () => {
   // TODO: initial load from chrome storage
   const newRule: BlockUrlRule = new BlockUrlRule(null)
   rules.value.push(newRule)
-  console.log('added new rule', newRule)
+  console.log('added new rule', rules.value, newRule)
 }
 </script>
 
@@ -72,7 +73,7 @@ const addBlockUrlRule = () => {
     </div>
 
     <div id="rules-view">
-      <RuleView v-for="(rule, index) in rules" :key="index" :rule="rule" />
+      <rule-view v-for="(rule, index) in rules" :key="index" :rule="rule" />
     </div>
 
     <div id="search-bar">
@@ -146,6 +147,14 @@ main {
         padding-bottom: 0.5rem;
       }
     }
+  }
+
+  & div#rules-view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   & > div#search-bar {

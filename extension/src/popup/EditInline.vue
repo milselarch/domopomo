@@ -135,11 +135,13 @@ export default {
     },
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   created() {},
 
   mounted() {
     const element = this.$refs.EditInline
     const $element = $(element)
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
     // \\*\*
 

@@ -19,9 +19,15 @@ dependencies:
   buefy:
     specifier: ^3.0.4
     version: 3.0.4(vue@3.5.32)
+  jquery:
+    specifier: ^4.0.0
+    version: 4.0.0
   luxon:
     specifier: ^3.7.2
     version: 3.7.2
+  regex-colorizer:
+    specifier: ^1.0.2
+    version: 1.0.2
   vue:
     specifier: ^3.5.32
     version: 3.5.32(typescript@6.0.2)
@@ -966,6 +972,10 @@ packages:
     dev: true
     optional: true
 
+  /jquery@4.0.0:
+    resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
+    dev: false
+
   /lightningcss-android-arm64@1.32.0:
     resolution: {integrity: sha512-YK7/ClTt4kAK0vo6w3X+Pnm0D2cf2vPHbhOXdoNti1Ga0al1P4TBZhwjATvjNwLEBCnKvjJc2jQgHXH0NEwlAg==}
     engines: {node: '>= 12.0.0'}
@@ -1135,6 +1145,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /regex-colorizer@1.0.2:
+    resolution: {integrity: sha512-TCU2xbbPkXPFFct8pPC/9m43f8VO8dHM34uNFR7JIqe6SXpT+NHRtLZiTyLanmN/2+BAmruF2Dasaw0wW7khRw==}
+    dev: false
 
   /rolldown@1.0.0-rc.12(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1):
     resolution: {integrity: sha512-yP4USLIMYrwpPHEFB5JGH1uxhcslv6/hL0OyvTuY+3qlOSJvZ7ntYnoWpehBxufkgN0cvXxppuTu5hHa/zPh+A==}
